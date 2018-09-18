@@ -1,21 +1,25 @@
-# Small Motion Lab Title
+# HTML iFrames
 
-## Objective
+In this lab we’re going to get practice writing HTML iframes and their
+attributes.
 
-- Practice a specific, often atomic, concept
+## Objectives
+
+- Practice writing iframes
+- Practice writing iframe attributes
 
 ## Instructions
 
-Work through the challenges below one at a time. Run `learn` to verify you've
-written a correct solution for each.
+Work through the challenges below one at a time, writing your solutions in
+`index.html`. Run `learn` to verify you've written a correct solution for each.
 
-#### 1) Add an `href` attribute to an `a` tag
+#### 1) Add an `iframe` tag with no attributes
 
-#### 2) Add an `id` attribute to an h1 tag
+#### 2) Add an `iframe` tag
 
-#### 3) Add a `class` attribute to every `li` tag
+#### 3) Add an `iframe` tag
 
-#### 4) Add a `class` and `href` attribute to every `a` tag
+#### 4) Add an `iframe` tag
 
 #### 5) etc....
 
@@ -25,6 +29,6 @@ Summarize the concept, any important syntax, rules or exceptions that were pract
 
 ## References
 
--[Official documentation][use-footnote-style-links]
+-[HTML <iframe> Tag][iframes]
 
-[use-footnote-style-links]: #
+[iframes]: https://www.w3schools.com/tags/tag_iframe.asp

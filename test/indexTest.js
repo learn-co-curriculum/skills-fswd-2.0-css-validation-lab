@@ -1,143 +1,203 @@
 const chai = require('chai');
-// // Example Tests
-// describe('index.html', () => {
-// 	it("includes 'hello' in the body", () => {
-// 		expect(
-// 			document.querySelector('body').innerHTML,
-// 			'the body does not contain "hello"'
-// 		).to.include('hello');
-// 	});
-//
-// 	it('includes an empty div in the body', () => {
-// 		expect(
-// 			document.querySelector('body').innerHTML,
-// 			'no empty div element found within body'
-// 		).to.include('<div></div>');
-// 		//for more general HTML tests, use match() or chai-dom
-// 	});
-// });
-//
-// // Example Tests - REMOVE index.js and this test for HTML only labs
-// describe('index.js', () => {
-// 	it('includes example test variables', () => {
-// 		expect(testVar, 'testVar was not found').to.exist;
-// 		expect(testVar, 'testVar did not equal {}').to.deep.equal({}); //without .deep, {} does not equal {}
-// 		expect(testFunc, 'testFunc was not found').to.exist;
-// 		expect(testFunc(), 'testFunc did not return').to.equal('hi');
-// 	});
-// });
 
 describe('index.html', () => {
 	let body;
+	let iframes;
+
 	beforeEach(function() {
 		chai.use(require('chai-dom'));
 		body = document.querySelector('body');
+		iframes = document.querySelectorAll('iframe');
+	});
+
+	it('contains at least one iframe', () => {
+		expect(iframes, 'No `iframe` tags were found inside `body`').not.to.be
+			.empty;
 	});
 
 	// 1
-	it('contains an `h1` nested inside `body`', () => {
-		let html = document.querySelector('html');
+	it('contains an `iframe` with no attributes', () => {
+		let iframe = Array.prototype.find.call(iframes, i => i.src === '');
 
-		expect(html, 'No `body` tag was found').to.contain('body');
-		expect(body, 'No `h1` tag was found inside `body`').to.contain('h1');
+		expect(
+			iframe,
+			'An iframe without any attributes was not found'
+		).not.to.have.attr('src');
 	});
 
 	// 2
-	it('contains an `li` tag nested inside a `ul` tag', () => {
-		let ul = document.querySelector('ul');
-
-		expect(body, 'No `ul` tag was found').to.contain('ul');
-		expect(ul, 'No `li` tag was found inside a `ul` tag').to.contain('li');
+	it('contains an `iframe` with a src set to "https://www.warnerbros.com/archive/spacejam/movie/jam.htm"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://www.warnerbros.com/archive/spacejam/movie/jam.htm'
+		);
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.warnerbros.com/archive/spacejam/movie/jam.htm" was not found'
+		).to.have.attribute(
+			'src',
+			'https://www.warnerbros.com/archive/spacejam/movie/jam.htm'
+		);
 	});
 
 	// 3
-	it('contains a `span` tag inside a `main` tag', () => {
-		let main = document.querySelector('main');
-
-		expect(body, 'No `main` tag was found').to.contain('main');
-		expect(main, 'No `span` tag was found inside a `main` tag').to.contain(
-			'span'
+	it('contains an `iframe` with src set to "https://web.archive.org/web/19981202230410/http://www.google.com:80/"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i =>
+				i.src ===
+				'https://web.archive.org/web/19981202230410/http://www.google.com:80/'
+		);
+		expect(
+			iframe,
+			'An iframe with src set to "https://web.archive.org/web/19981202230410/http://www.google.com:80/" was not found'
+		).to.have.attribute(
+			'src',
+			'https://web.archive.org/web/19981202230410/http://www.google.com:80/'
 		);
 	});
 
 	// 4
-	it('contains a `header` tag inside an `article` tag', () => {
-		let article = document.querySelector('article');
-
-		expect(body, 'No `article` tag was found').to.contain('article');
+	it('contains an `iframe` with height set to "200px" and src set to "https://www.bing.com/"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://www.bing.com/'
+		);
 		expect(
-			article,
-			'No `header` tag was found inside an `article` tag'
-		).to.contain('header');
+			iframe,
+			'An iframe with src set to "https://www.bing.com/" was not found'
+		).to.have.attribute('src', 'https://www.bing.com/');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.bing.com/" is set to the incorrect height'
+		).to.have.attribute('height', '200px');
 	});
 
 	// 5
-	it('contains an `h4` tag inside a `aside` tag', () => {
-		let aside = document.querySelector('aside');
-
-		expect(body, 'No `aside` tag was found').to.contain('aside');
-		expect(aside, 'No `h4` tag was found inside an `aside` tag').to.contain(
-			'h4'
+	it('contains an `iframe` with width set to "400px" and src set to "https://whoishiring.io/"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://whoishiring.io/'
 		);
+		expect(
+			iframe,
+			'An iframe with src set to "https://whoishiring.io/" was not found'
+		).to.have.attribute('src', 'https://whoishiring.io/');
+		expect(
+			iframe,
+			'An iframe with src set to "https://whoishiring.io/" is set to the incorrect width'
+		).to.have.attribute('width', '400px');
 	});
 
 	// 6
-	it('contains a `strong` tag and an `em` tag inside a `p` tag', () => {
-		let p = document.querySelector('p');
-
-		expect(body, 'No `p` tag was found').to.contain('p');
-		expect(p, 'No `strong` tag was found inside a `p` tag').to.contain(
-			'strong'
+	it('contains an `iframe` with width and height set to "400px" and src set to "https://www.mapquest.com/"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://www.mapquest.com/'
 		);
-		expect(p, 'No `em` tag was found inside a `p` tag').to.contain('em');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.mapquest.com/" was not found'
+		).to.have.attribute('src', 'https://www.mapquest.com/');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.mapquest.com/" is set to the incorrect width'
+		).to.have.attribute('width', '400px');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.mapquest.com/" is set to the incorrect height'
+		).to.have.attribute('height', '400px');
 	});
 
 	// 7
-	it('contains a `summary` tag inside a `details` tag', () => {
-		let details = document.querySelector('details');
-
-		expect(body, 'No `details` tag was found').to.contain('details');
+	it('contains an `iframe` with width set to "600px", height set to "300px", and src set to "https://imgs.xkcd.com/comics/tags.png"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://imgs.xkcd.com/comics/tags.png'
+		);
 		expect(
-			details,
-			'No `summary` tag was found inside a `details` tag'
-		).to.contain('summary');
+			iframe,
+			'An iframe with src set to "https://imgs.xkcd.com/comics/tags.png" was not found'
+		).to.have.attribute('src', 'https://imgs.xkcd.com/comics/tags.png');
+		expect(
+			iframe,
+			'An iframe with src set to "https://imgs.xkcd.com/comics/tags.png" is set to the incorrect width'
+		).to.have.attribute('width', '600px');
+		expect(
+			iframe,
+			'An iframe with src set to "https://imgs.xkcd.com/comics/tags.png" is set to the incorrect height'
+		).to.have.attribute('height', '300px');
 	});
 
 	// 8
-	it('contains a `q` tag inside a `div` tag', () => {
-		let div = document.querySelector('div');
-
-		expect(body, 'No `div` tag was found').to.contain('div');
-		expect(div, 'No `q` tag was found inside a `div` tag').to.contain('q');
+	it('contains an `iframe` with a name attribute set to "html5", width set to "100%", height set to "400px", and src set to "https://dev.w3.org/html5/html-author/"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://dev.w3.org/html5/html-author/'
+		);
+		expect(
+			iframe,
+			'An iframe with src set to "https://dev.w3.org/html5/html-author/" was not found'
+		).to.have.attribute('src', 'https://dev.w3.org/html5/html-author/');
+		expect(
+			iframe,
+			'An iframe with src set to "https://dev.w3.org/html5/html-author/" is set to the incorrect width'
+		).to.have.attribute('width', '100%');
+		expect(
+			iframe,
+			'An iframe with src set to "https://dev.w3.org/html5/html-author/" is set to the incorrect height'
+		).to.have.attribute('height', '400px');
+		expect(
+			iframe,
+			'An iframe with src set to "https://dev.w3.org/html5/html-author/" should have a name attribute set to "html5"'
+		).to.have.attribute('name', 'html5');
 	});
 
 	// 9
-	it('contains a `del` tag and an `ins` tag inside an `address` tag', () => {
-		let address = document.querySelector('address');
-
-		expect(body, 'No `address` tag was found').to.contain('address');
-		expect(address, 'No `del` tag was found inside a `address` tag').to.contain(
-			'del'
+	it('contains an `iframe` with name set to "wikipedia", width set to "49%", height set to "200px", and src set to "https://www.wikipedia.org/"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://www.wikipedia.org/'
 		);
-		expect(address, 'No `ins` tag was found inside a `address` tag').to.contain(
-			'ins'
-		);
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.wikipedia.org/" was not found'
+		).to.have.attribute('src', 'https://www.wikipedia.org/');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.wikipedia.org/" is set to the incorrect width'
+		).to.have.attribute('width', '49%');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.wikipedia.org/" is set to the incorrect height'
+		).to.have.attribute('height', '200px');
+		expect(
+			iframe,
+			'An iframe with src set to "https://www.wikipedia.org/" should have a name attribute set to "wikipedia"'
+		).to.have.attribute('name', 'wikipedia');
 	});
 
 	// 10
-	it('contains a `mark` tag inside an `h3` tag inside a `section` tag', () => {
-		let section = document.querySelector('section');
-		let h3 = document.querySelector('h3');
-
-		expect(body, 'No `section` tag was found').to.contain('section');
-		expect(section, 'No `h3` tag was found inside a `section` tag').to.contain(
-			'h3'
+	it('contains an `iframe` with name set to "article", width set to "49%", height set to "400px", and src set to "https://en.wikipedia.org/wiki/HTML"', () => {
+		let iframe = Array.prototype.find.call(
+			iframes,
+			i => i.src === 'https://en.wikipedia.org/wiki/HTML'
 		);
-		expect(h3, 'No `mark` tag was found inside a `h3` tag').to.contain('mark');
-
 		expect(
-			section,
-			'Create a `mark` tag inside an `h3` tag inside an `section` tag'
-		).to.contain('mark');
+			iframe,
+			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" was not found'
+		).to.have.attribute('src', 'https://en.wikipedia.org/wiki/HTML');
+		expect(
+			iframe,
+			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" is set to the incorrect width'
+		).to.have.attribute('width', '49%');
+		expect(
+			iframe,
+			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" is set to the incorrect height'
+		).to.have.attribute('height', '400px');
+		expect(
+			iframe,
+			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" should have a name attribute set to "wikipedia"'
+		).to.have.attribute('name', 'article');
 	});
 });

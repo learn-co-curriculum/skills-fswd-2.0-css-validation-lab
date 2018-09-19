@@ -4,7 +4,7 @@
   "description": "A template for learn labs",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R mocha-multi --reporter-options json=.results.json,spec=-"
+    "test": "mocha --bail -R mocha-multi --reporter-options json=.results.json,spec=-"
   },
   "keywords": [
     "JavaScript",

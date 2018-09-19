@@ -1,4 +1,10 @@
 const chai = require('chai');
+const fs = require('file-system');
+const path = require('path');
+const css = fs.readFileSync(
+	path.resolve(__dirname, '..', 'index.css'),
+	'utf-8'
+);
 
 describe('index.html', () => {
 	let body;
@@ -10,194 +16,108 @@ describe('index.html', () => {
 		iframes = document.querySelectorAll('iframe');
 	});
 
-	it('contains at least one iframe', () => {
-		expect(iframes, 'No `iframe` tags were found inside `body`').not.to.be
-			.empty;
-	});
-
 	// 1
-	it('contains an `iframe` with no attributes', () => {
-		let iframe = Array.prototype.find.call(iframes, i => i.src === '');
-
-		expect(
-			iframe,
-			'An iframe without any attributes was not found'
-		).not.to.have.attr('src');
+	it('contains a `div` with the class "firstContainer" and three nested `p` tags', () => {
+		let div = document.querySelector('div.firstContainer');
+		expect(div, 'No `div` tag was found with the class "firstContainer"').not.to
+			.be.empty;
+		expect(div, 'The `div` tag is missing its original child tags')
+			.to.have.descendants('p')
+			.and.have.lengthOf.at.least(3);
 	});
 
 	// 2
-	it('contains an `iframe` with a src set to "https://www.warnerbros.com/archive/spacejam/movie/jam.htm"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://www.warnerbros.com/archive/spacejam/movie/jam.htm'
-		);
+	it('contains a `section` with the class "secondContainer" and three nested `span` tags', () => {
+		let section = document.querySelector('section.secondContainer');
 		expect(
-			iframe,
-			'An iframe with src set to "https://www.warnerbros.com/archive/spacejam/movie/jam.htm" was not found'
-		).to.have.attribute(
-			'src',
-			'https://www.warnerbros.com/archive/spacejam/movie/jam.htm'
-		);
+			section,
+			'No `section` tag was found with the class "secondContainer"'
+		).not.to.be.empty;
+		expect(section, 'The `section` tag is missing its original child tags')
+			.to.have.descendants('span')
+			.and.have.lengthOf.at.least(3);
 	});
 
 	// 3
-	it('contains an `iframe` with src set to "https://web.archive.org/web/19981202230410/http://www.google.com:80/"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i =>
-				i.src ===
-				'https://web.archive.org/web/19981202230410/http://www.google.com:80/'
-		);
-		expect(
-			iframe,
-			'An iframe with src set to "https://web.archive.org/web/19981202230410/http://www.google.com:80/" was not found'
-		).to.have.attribute(
-			'src',
-			'https://web.archive.org/web/19981202230410/http://www.google.com:80/'
-		);
+	it('contains a `nav` with the class "navContainer" and three nested `a` tags', () => {
+		let nav = document.querySelector('nav.navContainer');
+		expect(nav, 'No `nav` tag was found with the class "navContainer"').not.to
+			.be.empty;
+		expect(nav, 'The `nav` tag is missing its original child tags')
+			.to.have.descendants('a')
+			.and.have.lengthOf.at.least(3);
 	});
 
 	// 4
-	it('contains an `iframe` with height set to "200px" and src set to "https://www.bing.com/"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://www.bing.com/'
-		);
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.bing.com/" was not found'
-		).to.have.attribute('src', 'https://www.bing.com/');
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.bing.com/" is set to the incorrect height'
-		).to.have.attribute('height', '200px');
+	it('contains a `form` with the class "formContainer" and two nested `input` tags', () => {
+		let form = document.querySelector('form.formContainer');
+		expect(form, 'No `form` tag was found with the class "formContainer"').not
+			.to.be.empty;
+		expect(form, 'The `form` tag is missing its original child tags')
+			.to.have.descendants('input')
+			.and.have.lengthOf.at.least(2);
 	});
 
 	// 5
-	it('contains an `iframe` with width set to "400px" and src set to "https://whoishiring.io/"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://whoishiring.io/'
-		);
-		expect(
-			iframe,
-			'An iframe with src set to "https://whoishiring.io/" was not found'
-		).to.have.attribute('src', 'https://whoishiring.io/');
-		expect(
-			iframe,
-			'An iframe with src set to "https://whoishiring.io/" is set to the incorrect width'
-		).to.have.attribute('width', '400px');
+	it('contains a `header` with the class "headerContainer" and twenty nested `h2` tags', () => {
+		let header = document.querySelector('header.headerContainer');
+		expect(header, 'No `header` tag was found with the class "headerContainer"')
+			.not.to.be.empty;
+		expect(header, 'The `header` tag is missing its original child tags')
+			.to.have.descendants('h2')
+			.and.have.lengthOf.at.least(20);
 	});
 
 	// 6
-	it('contains an `iframe` with width and height set to "400px" and src set to "https://www.mapquest.com/"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://www.mapquest.com/'
-		);
+	it('contains a `section` tag with the class "sectionContainer" and four nested `img` tags', () => {
+		let section = document.querySelector('section.sectionContainer');
 		expect(
-			iframe,
-			'An iframe with src set to "https://www.mapquest.com/" was not found'
-		).to.have.attribute('src', 'https://www.mapquest.com/');
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.mapquest.com/" is set to the incorrect width'
-		).to.have.attribute('width', '400px');
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.mapquest.com/" is set to the incorrect height'
-		).to.have.attribute('height', '400px');
+			section,
+			'No `section` tag was found with the class "sectionContainer"'
+		).not.to.be.empty;
+		expect(section, 'The `section` tag is missing its original child tags')
+			.to.have.descendants('img')
+			.and.have.lengthOf.at.least(4);
 	});
 
 	// 7
-	it('contains an `iframe` with width set to "600px", height set to "300px", and src set to "https://imgs.xkcd.com/comics/tags.png"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://imgs.xkcd.com/comics/tags.png'
-		);
+	it('contains a `main` tag with the class "mainContainer" and a nested `section` tag with the class "nestedContainer"', () => {
+		let main = document.querySelector('main.mainContainer');
+		expect(main, 'No `main` tag was found with the class "mainContainer"').not
+			.to.be.empty;
 		expect(
-			iframe,
-			'An iframe with src set to "https://imgs.xkcd.com/comics/tags.png" was not found'
-		).to.have.attribute('src', 'https://imgs.xkcd.com/comics/tags.png');
-		expect(
-			iframe,
-			'An iframe with src set to "https://imgs.xkcd.com/comics/tags.png" is set to the incorrect width'
-		).to.have.attribute('width', '600px');
-		expect(
-			iframe,
-			'An iframe with src set to "https://imgs.xkcd.com/comics/tags.png" is set to the incorrect height'
-		).to.have.attribute('height', '300px');
+			main,
+			'No `section` tag with the class "nestedContainer" was found within `main`'
+		).to.have.descendant(document.querySelector('section.nestedContainer'));
 	});
 
 	// 8
-	it('contains an `iframe` with a name attribute set to "html5", width set to "100%", height set to "400px", and src set to "https://dev.w3.org/html5/html-author/"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://dev.w3.org/html5/html-author/'
-		);
+	it('contains an `article` tag with the id "articleContainer" and two nested `figure` tags', () => {
+		let article = document.querySelector('article#articleContainer');
+
+		expect(article, 'No `article` tag was found with the id "articleContainer"')
+			.not.to.be.empty;
 		expect(
-			iframe,
-			'An iframe with src set to "https://dev.w3.org/html5/html-author/" was not found'
-		).to.have.attribute('src', 'https://dev.w3.org/html5/html-author/');
-		expect(
-			iframe,
-			'An iframe with src set to "https://dev.w3.org/html5/html-author/" is set to the incorrect width'
-		).to.have.attribute('width', '100%');
-		expect(
-			iframe,
-			'An iframe with src set to "https://dev.w3.org/html5/html-author/" is set to the incorrect height'
-		).to.have.attribute('height', '400px');
-		expect(
-			iframe,
-			'An iframe with src set to "https://dev.w3.org/html5/html-author/" should have a name attribute set to "html5"'
-		).to.have.attribute('name', 'html5');
+			article,
+			'No `figure` tags were found within `article`'
+		).to.have.descendants('figure');
+		expect(article, 'At least 2 `figure` tags should be nested in `article`')
+			.to.have.descendants('figure')
+			.and.have.lengthOf.at.least(2);
 	});
 
 	// 9
-	it('contains an `iframe` with name set to "wikipedia", width set to "49%", height set to "200px", and src set to "https://www.wikipedia.org/"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://www.wikipedia.org/'
+	it('contains an `div` tag with the class "divContainer" and three nested `span` tags', () => {
+		let div = document.querySelector('div.divContainer');
+		expect(div, 'No `div` tag was found with the class "divContainer"').not.to
+			.be.empty;
+		expect(div, 'No `span` tags were found within `div`').to.have.descendants(
+			'span'
 		);
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.wikipedia.org/" was not found'
-		).to.have.attribute('src', 'https://www.wikipedia.org/');
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.wikipedia.org/" is set to the incorrect width'
-		).to.have.attribute('width', '49%');
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.wikipedia.org/" is set to the incorrect height'
-		).to.have.attribute('height', '200px');
-		expect(
-			iframe,
-			'An iframe with src set to "https://www.wikipedia.org/" should have a name attribute set to "wikipedia"'
-		).to.have.attribute('name', 'wikipedia');
+		expect(div, 'At least 3 `span` tags should be nested in `div`')
+			.to.have.descendants('span')
+			.and.have.lengthOf.at.least(3);
 	});
 
 	// 10
-	it('contains an `iframe` with name set to "article", width set to "49%", height set to "400px", and src set to "https://en.wikipedia.org/wiki/HTML"', () => {
-		let iframe = Array.prototype.find.call(
-			iframes,
-			i => i.src === 'https://en.wikipedia.org/wiki/HTML'
-		);
-		expect(
-			iframe,
-			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" was not found'
-		).to.have.attribute('src', 'https://en.wikipedia.org/wiki/HTML');
-		expect(
-			iframe,
-			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" is set to the incorrect width'
-		).to.have.attribute('width', '49%');
-		expect(
-			iframe,
-			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" is set to the incorrect height'
-		).to.have.attribute('height', '400px');
-		expect(
-			iframe,
-			'An iframe with src set to "https://en.wikipedia.org/wiki/HTML" should have a name attribute set to "wikipedia"'
-		).to.have.attribute('name', 'article');
-	});
 });

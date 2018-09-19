@@ -1,0 +1,60 @@
+.firstContainer {
+	display: flex;
+}
+
+.secondContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.navContainer {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.formContainer {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.headerContainer {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	height: 200px;
+}
+
+.sectionContainer {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.mainContainer {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.nestedContainer {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+#articleContainer {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+figure {
+	display: flex;
+	flex-flow: column-reverse;
+}
+
+.divContainer {
+	display: flex;
+	flex-flow: row-reverse;
+}
+
+.divContainer span {
+	display: flex;
+	flex-flow: column-reverse;
+}

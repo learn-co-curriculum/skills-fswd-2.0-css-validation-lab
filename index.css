@@ -1,29 +1,72 @@
 /* Problem 1: Add a rule-set for the `body` element */
 /* Add a margin property */
+body {
+	margin: 0;
+}
 
 /* Problem 2: Add a rule-set for a `main` class */
 /* Add font-size and font-family properties */
+.main {
+	font-size: 100%;
+	font-family: cursive;
+}
 
 /* Problem 3: Add a rule-set for a `centerText` class */
 /* Add text-align, height, and line-height properties */
+.centerText {
+	text-align: center;
+	height: 100px;
+	line-height: 100px;
+}
 
 /* Problem 4: Add a rule-set for an 'title' id */
 /* Add font, text-align, and text-decoration properties */
+#title {
+	font: 250% Helvetica;
+	text-align: center;
+	text-decoration: underline overline;
+}
 
 /* Problem 5: Add a rule-set for the all `img` elements */
 /* Add display, margin-left, margin-right and width properties */
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
 
 /* Problem 6: Add an rule-set for all img elements that are descendants of div elements */
 /* Add display, margin-left, margin-right and width properties */
+div img {
+	border: 1px red;
+}
 
 /* Problem 7: Add an rule-set for all a elements */
 /* Add text-decoration and color properties */
+a {
+	text-decoration: none;
+	color: red;
+}
 
 /* Problem 8: Add an rule-set for all a elements on hover */
 /* Add text-shadow and font-weight properties */
+a:hover {
+	text-shadow: 2px 2px #000;
+	font-weight: bold;
+}
 
 /* Problem 9: Add an rule-set for all span and p elements */
 /* Add font-style and left properties */
+span,
+p {
+	font-style: italic;
+	left: auto;
+}
 
 /* Problem 10: Add an rule-set for all children of all section elements */
 /* Add visibility and opacity properties */
+section * {
+	visibility: hidden;
+	opacity: 0.5;
+}

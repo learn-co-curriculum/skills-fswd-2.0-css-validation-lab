@@ -1,426 +1,360 @@
 const chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
 const fs = require('file-system');
 const path = require('path');
-const css = fs.readFileSync(
-	path.resolve(__dirname, '..', 'index.css'),
-	'utf-8'
-);
+const validateCss = require('css-validator');
+const file = 'index.css';
+const css = fs.readFileSync(path.resolve(__dirname, '..', file), 'utf-8');
 
-describe('index.html', () => {
-	let body;
-	let iframes;
-
-	beforeEach(function() {
-		chai.use(require('chai-dom'));
-		body = document.querySelector('body');
-		iframes = document.querySelectorAll('iframe');
-	});
-
-	// 1
-	it('contains a `div` with the class "firstContainer" and three nested `p` tags', () => {
-		let div = document.querySelector('div.firstContainer');
-		expect(div, 'No `div` tag was found with the class "firstContainer"').not.to
-			.be.empty;
-		expect(div, 'The `div` tag is missing its original child tags')
-			.to.have.descendants('p')
-			.and.have.lengthOf.at.least(3);
-	});
-
-	// 2
-	it('contains a `section` with the class "secondContainer" and three nested `span` tags', () => {
-		let section = document.querySelector('section.secondContainer');
-		expect(
-			section,
-			'No `section` tag was found with the class "secondContainer"'
-		).not.to.be.empty;
-		expect(section, 'The `section` tag is missing its original child tags')
-			.to.have.descendants('span')
-			.and.have.lengthOf.at.least(3);
-	});
-
-	// 3
-	it('contains a `nav` with the class "navContainer" and three nested `a` tags', () => {
-		let nav = document.querySelector('nav.navContainer');
-		expect(nav, 'No `nav` tag was found with the class "navContainer"').not.to
-			.be.empty;
-		expect(nav, 'The `nav` tag is missing its original child tags')
-			.to.have.descendants('a')
-			.and.have.lengthOf.at.least(3);
-	});
-
-	// 4
-	it('contains a `form` with the class "formContainer" and two nested `input` tags', () => {
-		let form = document.querySelector('form.formContainer');
-		expect(form, 'No `form` tag was found with the class "formContainer"').not
-			.to.be.empty;
-		expect(form, 'The `form` tag is missing its original child tags')
-			.to.have.descendants('input')
-			.and.have.lengthOf.at.least(2);
-	});
-
-	// 5
-	it('contains a `header` with the class "headerContainer" and twenty nested `h2` tags', () => {
-		let header = document.querySelector('header.headerContainer');
-		expect(header, 'No `header` tag was found with the class "headerContainer"')
-			.not.to.be.empty;
-		expect(header, 'The `header` tag is missing its original child tags')
-			.to.have.descendants('h2')
-			.and.have.lengthOf.at.least(20);
-	});
-
-	// 6
-	it('contains a `section` tag with the class "sectionContainer" and four nested `img` tags', () => {
-		let section = document.querySelector('section.sectionContainer');
-		expect(
-			section,
-			'No `section` tag was found with the class "sectionContainer"'
-		).not.to.be.empty;
-		expect(section, 'The `section` tag is missing its original child tags')
-			.to.have.descendants('img')
-			.and.have.lengthOf.at.least(4);
-	});
-
-	// 7
-	it('contains a `main` tag with the class "mainContainer" and a nested `section` tag with the class "nestedContainer"', () => {
-		let main = document.querySelector('main.mainContainer');
-		expect(main, 'No `main` tag was found with the class "mainContainer"').not
-			.to.be.empty;
-		expect(
-			main,
-			'No `section` tag with the class "nestedContainer" was found within `main`'
-		).to.have.descendant(document.querySelector('section.nestedContainer'));
-	});
-
-	// 8
-	it('contains an `article` tag with the id "articleContainer" and two nested `figure` tags', () => {
-		let article = document.querySelector('article#articleContainer');
-
-		expect(article, 'No `article` tag was found with the id "articleContainer"')
-			.not.to.be.empty;
-		expect(
-			article,
-			'No `figure` tags were found within `article`'
-		).to.have.descendants('figure');
-		expect(article, 'At least 2 `figure` tags should be nested in `article`')
-			.to.have.descendants('figure')
-			.and.have.lengthOf.at.least(2);
-	});
-
-	// 9
-	it('contains an `div` tag with the class "divContainer" and three nested `span` tags', () => {
-		let div = document.querySelector('div.divContainer');
-		expect(div, 'No `div` tag was found with the class "divContainer"').not.to
-			.be.empty;
-		expect(div, 'No `span` tags were found within `div`').to.have.descendants(
-			'span'
-		);
-		expect(div, 'At least 3 `span` tags should be nested in `div`')
-			.to.have.descendants('span')
-			.and.have.lengthOf.at.least(3);
+describe('index.css', () => {
+	it('is a valid CSS document', () => {
+		return expect(
+			new Promise(resolve => {
+				let results;
+				validateCss(css, (err, data) => {
+					resolve(data.validity);
+				});
+			})
+		).to.eventually.equal(true);
 	});
 });
 
+// Note: The \s* you see in errors is regex for any spaces or new lines, any amount of times
+// [\S\s]* is for any characters any amount of times (to ignore the values set in tests)
 describe('index.css', () => {
-	// 1
-	describe(`contains a .firstContainer rule-set`, () => {
-		it('.firstContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .firstContainer').to.match(
-				/\.firstContainer {[\S\s]*}/
+	describe('.main rule-set', () => {
+		let classSection;
+
+		before(() => {
+			let match = css.match(/.main {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `.main rules-set was not found in ${file}`).to.match(
+				/\.main {[\S\s]*}/
 			);
 		});
 
-		it('.firstContainer has the display property set to flex', () => {
-			expect(css, '.firstContainer does not have display set to flex').to.match(
-				/\.firstContainer {[\S\s]*display: flex[\S\s]*}/
-			);
+		it(`has a font-family property`, () => {
+			expect(
+				classSection,
+				`.main rule-set does not have a font-family property`
+			).to.include('font-family');
+		});
+
+		it(`has a font-size property`, () => {
+			expect(
+				classSection,
+				`.main rule-set does not have a font-family property`
+			).to.include('font-size');
 		});
 	});
 
-	// 2
-	describe(`contains a .secondContainer rule-set`, () => {
-		it('.secondContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .secondContainer').to.match(
-				/\.secondContainer {[\S\s]*}/
+	describe('.centerText rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/.centerText {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `.centerText rules-set was not found in ${file}`).to.match(
+				/\.centerText {[\S\s]*}/
 			);
 		});
 
-		it('.secondContainer has the display property set to flex', () => {
+		it(`has a text-align property`, () => {
 			expect(
-				css,
-				'.secondContainer does not have display set to flex'
-			).to.match(/\.secondContainer {[\S\s]*display: flex;[\S\s]*}/);
+				classSection,
+				`.centerText rule-set does not have a text-align property`
+			).to.include('text-align');
 		});
 
-		it('.secondContainer has the flex-direction property set to column', () => {
+		it(`has a height property`, () => {
 			expect(
-				css,
-				'.secondContainer does not have flex-direction set to column'
-			).to.match(/\.secondContainer {[\S\s]*flex-direction: column;[\S\s]*}/);
+				classSection,
+				`.centerText rule-set does not have a height property`
+			).to.include('height');
+		});
+
+		it(`has a line-height property`, () => {
+			expect(
+				classSection,
+				`.centerText rule-set does not have a line-height property`
+			).to.include('line-height');
 		});
 	});
 
-	// 3
-	describe(`contains a .navContainer rule-set`, () => {
-		it('.navContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .navContainer').to.match(
-				/\.navContainer {[\S\s]*}/
+	describe('#title rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/#title {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `#title rules-set was not found in ${file}`).to.match(
+				/#title {[\S\s]*}/
 			);
 		});
 
-		it('.navContainer has the display property set to flex', () => {
-			expect(css, '.navContainer does not have display set to flex').to.match(
-				/\.navContainer {[\S\s]*display: flex;[\S\s]*}/
-			);
-		});
-
-		it('.navContainer has the flex-direction property set to row-reverse', () => {
+		it(`has a font property`, () => {
 			expect(
-				css,
-				'.navContainer does not have flex-direction set to row-reverse'
-			).to.match(/\.navContainer {[\S\s]*flex-direction: row-reverse;[\S\s]*}/);
+				classSection,
+				`#title rule-set does not have a font property`
+			).to.include('font');
+		});
+
+		it(`has a text-align property`, () => {
+			expect(
+				classSection,
+				`#title rule-set does not have a text-align property`
+			).to.include('text-align');
+		});
+
+		it(`has a text-decoration property`, () => {
+			expect(
+				classSection,
+				`#title rule-set does not have a text-decoration property`
+			).to.include('text-decoration');
 		});
 	});
 
-	// 4
-	describe(`contains a .formContainer rule-set`, () => {
-		it('.formContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .formContainer').to.match(
-				/\.formContainer {[\S\s]*}/
+	describe('img rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/img {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `img rules-set was not found in ${file}`).to.match(
+				/img {[\S\s]*}/
 			);
 		});
 
-		it('.formContainer has the display property set to flex', () => {
-			expect(css, '.formContainer does not have display set to flex').to.match(
-				/\.formContainer {[\S\s]*display: flex;[\S\s]*}/
-			);
-		});
-
-		it('.formContainer has the flex-direction property set to column-reverse', () => {
+		it(`has a display property`, () => {
 			expect(
-				css,
-				'.formContainer does not have flex-direction set to column-reverse'
-			).to.match(
-				/\.formContainer {[\S\s]*flex-direction: column-reverse;[\S\s]*}/
-			);
+				classSection,
+				`img rule-set does not have a display property`
+			).to.include('display');
+		});
+
+		it(`has a margin-left property`, () => {
+			expect(
+				classSection,
+				`img rule-set does not have a margin-left property`
+			).to.include('margin-left');
+		});
+
+		it(`has a margin-right property`, () => {
+			expect(
+				classSection,
+				`img rule-set does not have margin-right property`
+			).to.include('margin-right');
+		});
+
+		it(`has a width property`, () => {
+			expect(
+				classSection,
+				`img rule-set does not have a width property`
+			).to.include('width');
 		});
 	});
 
-	// 5
-	describe(`contains a .headerContainer rule-set`, () => {
-		it('.headerContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .headerContainer').to.match(
-				/\.headerContainer {[\S\s]*}/
+	describe('div img rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/div img {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `div img rule-set was not found in ${file}`).to.match(
+				/div img {[\S\s]*}/
 			);
 		});
 
-		it('.headerContainer has the display property set to flex', () => {
+		it(`has a border property`, () => {
 			expect(
-				css,
-				'.headerContainer does not have display set to flex'
-			).to.match(/\.headerContainer {[\S\s]*display: flex;[\S\s]*}/);
-		});
-
-		it('.headerContainer has the flex-direction property set to column-reverse', () => {
-			expect(
-				css,
-				'.headerContainer does not have flex-direction set to column-reverse'
-			).to.match(/\.headerContainer {[\S\s]*flex-direction: column;[\S\s]*}/);
-		});
-
-		it('.headerContainer has the flex-wrap property set to wrap', () => {
-			expect(
-				css,
-				'.headerContainer does not have flex-wrap property set to wrap'
-			).to.match(/\.headerContainer {[\S\s]*flex-wrap: wrap;[\S\s]*}/);
-		});
-
-		it('.headerContainer has the height property set to 200px', () => {
-			expect(
-				css,
-				'.headerContainer does not have height property set to 200px'
-			).to.match(/\.headerContainer {[\S\s]*height: 200px;[\S\s]*}/);
+				classSection,
+				`div img rule-set does not have a border property`
+			).to.include('border');
 		});
 	});
 
-	// 6
-	describe(`contains a .sectionContainer rule-set`, () => {
-		it('.sectionContainer exists', () => {
-			expect(
-				css,
-				'index.css is missing a rule-set: .sectionContainer'
-			).to.match(/\.sectionContainer {[\S\s]*}/);
+	describe('a rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/a {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
 		});
 
-		it('.sectionContainer has the display property set to flex', () => {
-			expect(
-				css,
-				'.sectionContainer does not have display set to flex'
-			).to.match(/\.sectionContainer {[\S\s]*display: flex;[\S\s]*}/);
+		it(`is present`, () => {
+			expect(css, `'a' rule-set was not found in ${file}`).to.match(
+				/a {[\S\s]*}/
+			);
 		});
 
-		it('.sectionContainer has the flex-flow property set to `row nowrap`', () => {
+		it(`has a text-decoration property`, () => {
 			expect(
-				css,
-				'.sectionContainer does not have flex-flow set to `row nowrap`'
-			).to.match(/\.sectionContainer {[\S\s]*flex-flow: row nowrap;[\S\s]*}/);
+				classSection,
+				`'a' rule-set does not have a text-decoration property`
+			).to.include('text-decoration');
+		});
+
+		it(`has a color property`, () => {
+			expect(
+				classSection,
+				`'a' rule-set does not have a color property`
+			).to.include('color');
 		});
 	});
 
-	// 7
-	describe(`contains a .mainContainer rule-set`, () => {
-		it('.mainContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .mainContainer').to.match(
-				/\.mainContainer {[\S\s]*}/
+	describe('a:hover rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/a:hover {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `a:hover rule-set was not found in ${file}`).to.match(
+				/a:hover {[\S\s]*}/
 			);
 		});
 
-		it('.mainContainer has the display property set to flex', () => {
-			expect(css, '.mainContainer does not have display set to flex').to.match(
-				/\.mainContainer {[\S\s]*display: flex;[\S\s]*}/
-			);
-		});
-
-		it('.mainContainer has the flex-flow property set to `column nowrap`', () => {
+		it(`has a text-shadow property`, () => {
 			expect(
-				css,
-				'.mainContainer does not have flex-flow set to `column nowrap`'
-			).to.match(/\.mainContainer {[\S\s]*flex-flow: column nowrap;[\S\s]*}/);
+				classSection,
+				`a:hover rule-set does not have a text-shadow property`
+			).to.include('text-shadow');
+		});
+
+		it(`has a font-weight property`, () => {
+			expect(
+				classSection,
+				`a:hover rule-set does not have a font-weight property`
+			).to.include('font-weight');
 		});
 	});
 
-	describe(`contains a .nestedContainer rule-set`, () => {
-		it('.nestedContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .nestedContainer').to.match(
-				/\.nestedContainer {[\S\s]*}/
+	describe('span, p rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/(p,\s*span|span,\s*p) {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
+		});
+
+		it(`is present`, () => {
+			expect(css, `span, p rule-set was not found in ${file}`).to.match(
+				/(p,\s*span|span,\s*p) {[\S\s]*}/
 			);
 		});
 
-		it('.nestedContainer has the display property set to flex', () => {
+		it(`has a font-style property`, () => {
 			expect(
-				css,
-				'.nestedContainer does not have display set to flex'
-			).to.match(/\.nestedContainer {[\S\s]*display: flex;[\S\s]*}/);
+				classSection,
+				`span, p rule-set does not have a font-style property`
+			).to.include('font-style');
 		});
 
-		it('.nestedContainer has the flex-flow property set to `row nowrap`', () => {
+		it(`has a left property`, () => {
 			expect(
-				css,
-				'.nestedContainer does not have flex-flow set to `row nowrap`'
-			).to.match(/\.nestedContainer {[\S\s]*flex-flow: row nowrap;[\S\s]*}/);
+				classSection,
+				`span, p rule-set does not have a left property`
+			).to.include('left');
 		});
 	});
 
-	// 8
-	describe(`contains a #articleContainer rule-set`, () => {
-		it('#articleContainer exists', () => {
-			expect(
-				css,
-				'index.css is missing a rule-set: #articleContainer'
-			).to.match(/\#articleContainer {[\S\s]*}/);
+	describe('section * rule-set', () => {
+		let classSection;
+		let match;
+
+		before(() => {
+			let match = css.match(/section \* {[\S\s]*}/);
+			try {
+				classSection = css.slice(
+					match['index'],
+					match['index'] + match[0].length
+				);
+			} catch {}
 		});
 
-		it('#articleContainer has the display property set to flex', () => {
-			expect(
-				css,
-				'#articleContainer does not have display set to flex'
-			).to.match(/\#articleContainer {[\S\s]*display: flex;[\S\s]*}/);
-		});
-
-		it('#articleContainer has the flex-flow property set to `row nowrap`', () => {
-			expect(
-				css,
-				'#articleContainer does not have flex-flow set to `row nowrap`'
-			).to.match(/\#articleContainer {[\S\s]*flex-flow: row nowrap;[\S\s]*}/);
-		});
-	});
-
-	describe(`contains a figure rule-set`, () => {
-		it('figure exists', () => {
-			expect(css, 'index.css is missing a rule-set: figure').to.match(
-				/figure {[\S\s]*}/
+		it(`is present`, () => {
+			expect(css, `section * rule-set was not found in ${file}`).to.match(
+				/section \* {[\S\s]*}/
 			);
 		});
 
-		it('figure has the display property set to flex', () => {
-			expect(css, 'figure does not have display set to flex').to.match(
-				/figure {[\S\s]*display: flex;[\S\s]*}/
-			);
-		});
-
-		it('figure has the flex-flow property set to `column-reverse`', () => {
+		it(`has a visibility property`, () => {
 			expect(
-				css,
-				'.nestedContainer does not have flex-flow set to `column-reverse`'
-			).to.match(/figure {[\S\s]*flex-flow: column-reverse;[\S\s]*}/);
-		});
-	});
-
-	// 9
-	describe(`contains a .divContainer rule-set`, () => {
-		it('.divContainer exists', () => {
-			expect(css, 'index.css is missing a rule-set: .divContainer').to.match(
-				/\.divContainer {[\S\s]*}/
-			);
+				classSection,
+				`section * rule-set does not have a visibility property`
+			).to.include('visibility');
 		});
 
-		it('.divContainer has the display property set to flex', () => {
-			expect(css, '.divContainer does not have display set to flex').to.match(
-				/\.divContainer {[\S\s]*display: flex;[\S\s]*}/
-			);
-		});
-
-		it('.divContainer has the flex-flow property set to `row-reverse`', () => {
+		it(`has a opacity property`, () => {
 			expect(
-				css,
-				'.divContainer does not have flex-flow set to `row-reverse`'
-			).to.match(/\.divContainer {[\S\s]*flex-flow: row-reverse;[\S\s]*}/);
-		});
-	});
-
-	describe('contains a `.divContainer span` rule-set', () => {
-		it('`.divContainer span` exists', () => {
-			expect(
-				css,
-				'index.css is missing a rule-set: .divContainer span'
-			).to.match(/\.divContainer span {[\S\s]*}/);
-		});
-
-		it('`.divContainer span` has the display property set to flex', () => {
-			expect(
-				css,
-				'`.divContainer span` does not have display set to flex'
-			).to.match(/\.divContainer span {[\S\s]*display: flex;[\S\s]*}/);
-		});
-
-		it('`.divContainer span` has the flex-flow property set to `column-reverse`', () => {
-			expect(
-				css,
-				'`.divContainer span` does not have flex-flow set to `column-reverse`'
-			).to.match(
-				/\.divContainer span {[\S\s]*flex-flow: column-reverse;[\S\s]*}/
-			);
-		});
-	});
-
-	// 10
-	describe(`contains a body rule-set`, () => {
-		it('body exists', () => {
-			expect(css, 'index.css is missing a rule-set: body').to.match(
-				/body {[\S\s]*}/
-			);
-		});
-
-		it('body has the display property set to flex', () => {
-			expect(css, 'body does not have display set to flex').to.match(
-				/body {[\S\s]*display: flex;[\S\s]*}/
-			);
-		});
-
-		it('body has the flex-flow property set to `column-reverse`', () => {
-			expect(
-				css,
-				'body does not have flex-flow set to `column-reverse`'
-			).to.match(/body {[\S\s]*flex-flow: column-reverse;[\S\s]*}/);
+				classSection,
+				`section * rule-set does not have a opacity property`
+			).to.include('opacity');
 		});
 	});
 });

@@ -1,91 +1,81 @@
-# CSS Flexbox Essentials Lab
+# Writing Valid CSS Lab
 
-In this lab we’re going to get practice writing the HTML and CSS necessary to
-create a basic flexbox.
+In this lab we’re going to focus on writing the CSS rule-sets.
 
 ## Objectives
 
-- Practice writing CSS rule-sets for flex
-- Practice applying CSS classes to HTML elements
+- Practice writing CSS rule-sets
+- Practice writing different CSS selectors
+- Practice writing a variety of CSS properties
 
 ## Instructions
 
 Work through the problems below one at a time, writing your solutions in
-`index.html` and `index.css`. Run `learn` to verify you've written a correct
-solution for each.
+`index.css`. There is no need to write any HTML, but feel free to use
+`index.html` while testing out the effects of different CSS properties. Run
+`learn` to verify you've written a correct solution for each problem.
 
-To see how flexbox changes the display of content, open `index.html` or run
-`httpserver` now and refresh the page as you solve each problem.
+#### 1:) Add a Rule-Set for the `body` Element
 
-#### 1) Apply a Minimal Flexbox Display to a `div`
+- Add a margin property to the rule-set
 
-- Add the class "firstContainer" to the provided `div` tag
-- Write a CSS rule-set for `.firstContainer` and set `display` to `flex`
+**Side Note:** The `body` element has a default margin of 8px. Setting margin to
+`0` is commonly used to override this.
 
-#### 2) Apply a Flexbox Column Display to a `section`
+#### 2:) Add a Rule-Set for a `main` Class
 
-- Add the class "secondContainer" to the provided `section` tag
-- Write a CSS rule-set for `.secondContainer` that sets the display to `flex` and
-  and flex-direction to `column`
+- Add font-size and font-family properties to the rule-set
 
-#### 3) Apply a Flexbox Reverse Row Display to a `nav`
+#### 3:) Add a Rule-Set for a `centerText` Class
 
-- Add the class "navContainer" to the provided `nav` tag
-- Write a corresponding flex display rule-set where direction is set to `row-reverse`
+- Add text-align, height, and line-height properties to the rule-set
 
-#### 4) Apply a Flexbox Reverse Column Display to a `form`
+**Side Note:** The setting `height` and `line-height` to the same value will
+vertically align text. Setting `text-center` to center will horizontally align
+text
 
-- Add the class "formContainer" to the provided `form` tag
-- Write a corresponding flex display rule-set where flex-direction is set to
-  `column-reverse`
+#### 4:) Add a Rule-Set for a 'title' Id
 
-#### 5) Apply a Flexbox Wrapped Column Display to a `header`
+- Add font, text-align, and text-decoration properties to the rule-set
 
-- Add the class "headerContainer" to the provided `header` tag
-- Write a corresponding flex display rule-set where flex-direction is set to
-  `column`, flex-wrap is set to `wrap`, and height is set to `200px`
+#### 5:) Add a Rule-Set for All `img` Elements
 
-#### 6) Apply a Flexbox No Wrap Row Display to a `section`
+- Add display, margin-left, margin-right and width properties to the rule-set
 
-- Add the class "sectionContainer" to the second `section` tag provided
-- Write a corresponding flex display rule-set using `flex-flow` in place of
-  `flex-direction` and `flex-wrap`. Set to it to display a row with no wrapping
+#### 6:) Add a Rule-Set for All `img` Elements that are Descendants of `div` Elements
 
-#### 7) Apply a Flexbox Display to the Nested Child of another Flexbox Display
+- Add display, margin-left, margin-right and width properties to the rule-set
 
-- Add the class "mainContainer" to the provided `main` tag. The corresponding
-  rule-set should display children as a column with no wrapping
-- Add the class "nestedContainer" to the `section` tag nested within `main`. The
-  corresponding rule-set should display children in a row with no wrapping
+**Note:** Order and specificity of rule-sets matters. If this
 
-#### 8) Apply a Nested Flexbox Display Using Alternative Selectors
+#### 7:) Add a Rule-Set for All `a` Elements
 
-- Add the **id** "articleContainer" to the provided `article` tag. The
-  corresponding rule-set should display children as a row with no
-  wrapping
-- Add a rule-set for all `figure` tags. The rule-set should display all children
-  in reverse column direction
+- Add text-decoration and color properties to the rule-set
 
-#### 9) Apply a Nested Flexbox Display Using Alternative Selectors
+#### 8:) Add a Rule-Set for All `a` Elements on Hover
 
-- Add the class "divContainer" to the final provided `div` tag. The
-  corresponding rule-set should display children in reverse row direction
-- Add a rule-set for all `span` tags that are children of `.divContainer`. The
-  rule-set should display all children in reverse column direction
+- Add text-shadow and font-weight properties to the rule-set
 
-#### 10) Apply a Flexbox Display to `body`
+#### 9:) Add a Rule-Set for All `span` and `p` Elements
 
-- Add a rule-set for the `body` tag that displays all children in reverse column
-  direction
+- Add font-style and left properties to the rule-set
+
+#### 10) Add a Rule-Set for All children of all `section` Elements
+
+- Add visibility and opacity properties to the rule-set
 
 ## Conclusion
 
-Flexbox displays can entirely alter the position and order of content on a
-webpage. Applying a minimal flex display to pages you build can keep content
-properly positioned and organized.
+CSS provides detailed control over how webpage content is displayed. We can
+apply rules that have a broad effect and later rules that fine tune specific
+elements. CSS syntax, however, can be strict, so it is good to practice writing
+out a variety of rule-sets. You can always use the [W3 CSS validator][validator]
+to check if your CSS is valid.
 
 ## References
 
--[HTML <iframe> Tag][iframes]
+-[CSS Selectors][selectors] -[CSS Specificity][specificity]
 
-[iframes]: https://www.w3schools.com/tags/tag_iframe.asp
+[selectors]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
+[specificity]: https://www.smashingmagazine.com/2007/07/css-specificity-things-you-should-know/
+[validator]: https://jigsaw.w3.org/css-validator/

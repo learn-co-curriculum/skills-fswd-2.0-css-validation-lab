@@ -23,5 +23,9 @@
     "mocha": "5.2.0",
     "mocha-jsdom": "~1.1.0",
     "mocha-multi": "1.0.1"
+  },
+  "dependencies": {
+    "chai-as-promised": "^7.1.1",
+    "css-validator": "^0.8.0"
   }
 }

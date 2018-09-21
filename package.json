@@ -1,7 +1,7 @@
 {
-  "name": "small-motion-lab-template",
+  "name": "css-validation-lab",
   "version": "1.0.0",
-  "description": "A template for learn labs",
+  "description": "CSS Validation Lab",
   "main": "index.js",
   "scripts": {
     "test": "mocha --bail -R mocha-multi --reporter-options json=.results.json,spec=-"

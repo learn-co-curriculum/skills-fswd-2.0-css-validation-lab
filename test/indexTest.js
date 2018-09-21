@@ -27,7 +27,7 @@ describe('index.css', () => {
 });
 
 // Note: The \s* you see in errors is regex for any spaces or new lines, any amount of times
-// [\S\s]* is for any characters any amount of times (to ignore the values set in tests)
+// [\S\s]* is for any characters any amount of times (to ignore property values, semi-colons, etc...)
 describe('index.css', () => {
 	describe('.main rule-set', () => {
 		let classSection;

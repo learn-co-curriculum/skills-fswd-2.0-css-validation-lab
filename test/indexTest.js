@@ -13,7 +13,13 @@ describe('index.css', () => {
 			new Promise(resolve => {
 				let results;
 				validateCss(css, (err, data) => {
-					resolve(data.validity);
+					data.validity
+						? resolve(data.validity)
+						: resolve(
+								`Invalid CSS on line ${data.errors[0].line}: ${
+									data.errors[0].errortype
+								}`
+						  );
 				});
 			})
 		).to.eventually.equal(true);

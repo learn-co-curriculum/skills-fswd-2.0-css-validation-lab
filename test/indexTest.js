@@ -39,7 +39,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: .main rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -74,7 +76,11 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(
+					`Error Parsing CSS File: .centerText rule-set was not found`
+				);
+			}
 		});
 
 		it(`is present`, () => {
@@ -116,7 +122,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: #title rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -158,7 +166,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: img rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -207,7 +217,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: 'div img' rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -235,7 +247,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: a rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -270,7 +284,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: a:hover rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -305,7 +321,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: 'span, p' rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {
@@ -340,7 +358,9 @@ describe('index.css', () => {
 					match['index'],
 					match['index'] + match[0].length
 				);
-			} catch {}
+			} catch (error) {
+				console.log(`Error Parsing CSS File: section rule-set was not found`);
+			}
 		});
 
 		it(`is present`, () => {

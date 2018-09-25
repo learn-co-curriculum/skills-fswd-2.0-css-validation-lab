@@ -15,18 +15,11 @@ Work through the problems below one at a time, writing your solutions in
 `index.html` while testing out the effects of different CSS properties. Run
 `learn` to verify you've written a correct solution for each problem.
 
-#### 1:) Add a Rule-Set for the `body` Element
-
-- Add a margin property to the rule-set
-
-**Side Note:** The `body` element has a default margin of 8px. Setting margin to
-`0` is commonly used to override this.
-
-#### 2:) Add a Rule-Set for a `main` Class
+#### 1) Add a Rule-Set for a `main` Class
 
 - Add font-size and font-family properties to the rule-set
 
-#### 3:) Add a Rule-Set for a `centerText` Class
+#### 2) Add a Rule-Set for a `centerText` Class
 
 - Add text-align, height, and line-height properties to the rule-set
 
@@ -34,33 +27,33 @@ Work through the problems below one at a time, writing your solutions in
 vertically align text. Setting `text-center` to center will horizontally align
 text
 
-#### 4:) Add a Rule-Set for a 'title' Id
+#### 3) Add a Rule-Set for a 'title' Id
 
 - Add font, text-align, and text-decoration properties to the rule-set
 
-#### 5:) Add a Rule-Set for All `img` Elements
+#### 4) Add a Rule-Set for All `img` Elements
 
 - Add display, margin-left, margin-right and width properties to the rule-set
 
-#### 6:) Add a Rule-Set for All `img` Elements that are Descendants of `div` Elements
+#### 5) Add a Rule-Set for All `img` Elements that are Descendants of `div` Elements
 
 - Add display, margin-left, margin-right and width properties to the rule-set
 
 **Note:** Order and specificity of rule-sets matters. If this
 
-#### 7:) Add a Rule-Set for All `a` Elements
+#### 6) Add a Rule-Set for All `a` Elements
 
 - Add text-decoration and color properties to the rule-set
 
-#### 8:) Add a Rule-Set for All `a` Elements on Hover
+#### 7) Add a Rule-Set for All `a` Elements on Hover
 
 - Add text-shadow and font-weight properties to the rule-set
 
-#### 9:) Add a Rule-Set for All `span` and `p` Elements
+#### 8) Add a Rule-Set for All `span` and `p` Elements
 
 - Add font-style and left properties to the rule-set
 
-#### 10) Add a Rule-Set for All children of all `section` Elements
+#### 9) Add a Rule-Set for All children of all `section` Elements
 
 - Add visibility and opacity properties to the rule-set
 

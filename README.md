@@ -67,7 +67,8 @@ to check if your CSS is valid.
 
 ## References
 
--[CSS Selectors][selectors] -[CSS Specificity][specificity]
+- [CSS Selectors][selectors]
+- [CSS Specificity][specificity]
 
 [selectors]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors
 [specificity]: https://www.smashingmagazine.com/2007/07/css-specificity-things-you-should-know/
